@@ -1,4 +1,4 @@
-package Item;
+package item;
 
 public interface ItemInterface {
 	public String getId();

@@ -1,4 +1,4 @@
-package Item;
+package item;
 
 public class Item implements ItemInterface{
 
@@ -7,11 +7,13 @@ public class Item implements ItemInterface{
 	private double preco;
 	
 	public Item() {
+		this.id    = "-1";
 		this.name  = "";
 		this.preco = 0;
 	}
 	
-	public Item(String name, double preco) {
+	public Item(String id, String name, double preco) {
+		this.id    = id;
 		this.name  = name;
 		this.preco = preco;
 	}
