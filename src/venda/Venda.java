@@ -31,6 +31,11 @@ public class Venda implements VendaInterface{
 		
 		return totalizacao;
 	}
+	
+	public NotaFiscal aplicarDesconto(NotaFiscal nf, double desconto) {
+		nf.setDesconto(desconto);
+		return nf;
+	}
 
 	public Item identificarItem(String codigo_barra) {
 		return banco_de_dados_items.get(codigo_barra);

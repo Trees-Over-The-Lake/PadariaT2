@@ -10,13 +10,14 @@ public class NotaFiscal implements NotaFiscalInterface {
 
 	private String id;
 	private HashMap<String, Pair<ItemInterface, Integer>> items_quantidades;
-	private double totalizacao;
-	
+	private double preco_total;
+	private double desconto;
 	
 	public NotaFiscal() {
 		this.id = "-1";
 		this.items_quantidades = new HashMap<String, Pair<ItemInterface, Integer>>();
-		this.totalizacao = 0;
+		this.preco_total = 0;
+		this.desconto    = 1;
 	}
 
 	@Override
@@ -30,13 +31,28 @@ public class NotaFiscal implements NotaFiscalInterface {
 	}
 	
 	@Override
-	public void setTotalizacao(double totalizacao) {
-		this.totalizacao = totalizacao;
+	public void setPrecoTotal(double totalizacao) {
+		this.preco_total = totalizacao;
 	}
 
 	@Override
-	public double getTotalizacao() {
-		return this.totalizacao;
+	public double getPrecoTotal() {
+		return this.preco_total;
+	}
+	
+	@Override
+	public double getPrecoTotalComDesconto() {
+		return this.preco_total * this.getDesconto();
+	}
+	
+	@Override
+	public void setDesconto(double desconto) {
+		this.desconto = desconto <= 100 ? desconto > 0 ? desconto : 1 : 1;
+	}
+
+	@Override
+	public double getDesconto() {
+		return this.desconto;
 	}
 	
 	@Override
@@ -64,10 +80,10 @@ public class NotaFiscal implements NotaFiscalInterface {
 			this.items_quantidades.put(chave ,atual);
 			
 		} else 
-			this.items_quantidades.put(chave , new Pair<ItemInterface, Integer>(i,1));
+			this.items_quantidades.put(chave , new Pair<ItemInterface, Integer>(i,0));
 		
 		
-		this.totalizacao += i.getPreco();
+		this.preco_total += i.getPreco();
 	}
 	
 	public String toString() {
@@ -90,7 +106,10 @@ public class NotaFiscal implements NotaFiscalInterface {
 		}
 		nota_fiscal += "--------------------------------\n";
 		nota_fiscal += "TOTAL DE ITENS \t \t " + this.getNumeroItems() + "\n";
-		nota_fiscal += "PREÇO TOTAL R$ \t \t " + this.totalizacao + "\n";
+		if ( this.getDesconto() != 1)
+			nota_fiscal += "DESCONTO       \t \t " + this.getDesconto() + "%\n";
+		
+		nota_fiscal += "PREÇO TOTAL R$ \t \t " + this.preco_total * this.getDesconto() + "\n";
 		
 		return nota_fiscal;
 	}
