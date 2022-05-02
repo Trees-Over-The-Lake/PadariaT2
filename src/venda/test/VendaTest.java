@@ -44,7 +44,7 @@ public class VendaTest {
 		padaria.aplicarDesconto(nota_fiscal, 15);
 		
 		Assert.assertEquals(15.0, nota_fiscal.getDesconto(),0);
-		Assert.assertEquals(33.3965, nota_fiscal.getPrecoTotal(),0);
+		Assert.assertEquals(33.39, nota_fiscal.getPrecoTotal(),0);
 	}
 	
 	@Test
